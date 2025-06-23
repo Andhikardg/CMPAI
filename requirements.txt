@@ -2,3 +2,4 @@ matplotlib==3.10.3
 pandas==2.3.0
 Requests==2.32.4
 streamlit==1.39.0
+openpyxl==25.1.1
