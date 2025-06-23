@@ -4,6 +4,7 @@ import requests
 import io
 import json
 import time
+import openpyxl
 
 st.set_page_config(layout="wide")
 st.title("CMP Automatic Feedback AI")
