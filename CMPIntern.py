@@ -16,9 +16,7 @@ api_key = st.text_input("Masukkan API Key Anda:", type="password")
 model_name = st.text_input("Masukkan Nama Model AI:", value="gpt-4" if provider == "OpenAI" else "gemini-pro")
 
 category_descriptions = [
-        'Informasi Produk & Layanan : Semua pembahasan terkait informasi, atribut (kelebihan, kekurangan, fitur), perbandingan, kisah sukses, rekomendasi, dan tautan produk serta layanan Telkom Indonesia.',
-        
-        'Package Information : Segala pembahasan terkait informasi paket yang tersedia, perbandingan antar paket, permintaan perubahan paket (menaikkan, menurunkan, migrasi), kebijakan penggunaan (FUP), serta pengecekan penggunaan atau sisa paket layanan.',
+        'Informasi Produk & Layanan : Semua pembahasan terkait informasi penggunaan aplikasi dan layanan, atribut (kelebihan, kekurangan, fitur), perbandingan, kisah sukses, rekomendasi, informasi harga produk, package Information, IP Layanan, Perbedaan Paket dan tautan produk serta layanan Telkom Indonesia.',
         
         'Status dan Proses Pemesanan : Segala pembahasan terkait informasi paket yang tersedia, perbandingan antar paket, permintaan perubahan paket (menaikkan, menurunkan, migrasi), kebijakan penggunaan (FUP), serta pengecekan penggunaan atau sisa paket layanan.',
         
@@ -30,19 +28,21 @@ category_descriptions = [
         
         'Others : Kategori untuk pertanyaan yang tidak relevan, tidak jelas, di luar cakupan produk/layanan, sapaan, upaya probing informasi, serta pembahasan kompetitor atau misklasifikasi sistem.',
         
-        'Price & Promo : Segala hal terkait tagihan, metode dan status pembayaran, informasi harga produk, promo diskon, serta insentif dan kode referral.',
+        'Price & Intensif : Segala hal Terkait, promo diskon, serta insentif dan kode referral.',
         
-        'Kompetitor : Informasi terkait perusahaan lain, perbandingan produk dan pelayanan, dan referensi dari kompetitor untuk pengembangan produk.',
+        'Kompetitor : Informasi terkait perusahaan lain, perbandingan produk dan pelayanan, dan referensi dari kompetitor utk pengembangan produk.',
         
-        'Call Center : Mengacu pada permintaan pelanggan untuk hal-hal diluar konteks dan bersifat privacy.',
+        'Call Center : Mengacu pada permintaan pelanggan untuk hal hal diluar konteks dan bersifat privacy.',
         
         'Service Complaints : Segala bentuk keluhan atau masalah yang diajukan oleh pelanggan terkait kualitas atau kinerja layanan yang mereka terima.',
         
         'Maintenance : Semua kegiatan yang dilakukan untuk menjaga, memperbaiki, atau meningkatkan fungsi dan kualitas suatu sistem atau layanan agar tetap beroperasi dengan optimal.',
         
-        'Pelatihan Bisnis : Program atau kegiatan yang dirancang untuk memberikan pengetahuan, keterampilan, atau wawasan yang relevan untuk pengembangan profesional atau operasional dalam konteks bisnis.',
+        'Pelatihan Bisnis : program atau kegiatan yang dirancang untuk memberikan pengetahuan, keterampilan, atau wawasan yang relevan untuk pengembangan profesional atau operasional dalam konteks bisnis.',
         
-        'After Sales : Seluruh bentuk dukungan dan layanan yang diberikan kepada pelanggan setelah mereka melakukan pembelian atau mulai menggunakan suatu produk/layanan, bertujuan untuk memastikan kepuasan dan keberlanjutan penggunaan.'
+        'After Sales : seluruh bentuk dukungan dan layanan yang diberikan kepada pelanggan setelah mereka melakukan pembelian, bertujuan untuk memastikan kepuasan dan keberlanjutan penggunaan.',
+        
+        'Billing : Segala hal terkait tagihan, metode dan status pembayaran.'
 ]
 predefined_topics = ['Informasi Produk & Layanan', 
                      'Package Information', 
