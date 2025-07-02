@@ -44,13 +44,12 @@ category_descriptions = [
         
         'Billing : Segala hal terkait tagihan, metode dan status pembayaran.'
 ]
-predefined_topics = ['Informasi Produk & Layanan', 
-                     'Package Information', 
+predefined_topics = ['Informasi Produk & Layanan',  
                      'Status dan Proses Pemesanan',
                      'Administrasi', 'Ketersediaan Layanan',
-                     'General Business Discussion', 'Others', 'Price & Promo', 'Kompetitor',
+                     'General Business Discussion', 'Others', 'Billing', 'Kompetitor',
                      'Call Center', 'Service Complaints', 'Maintenance', 'Pelatihan Bisnis',
-                     'After Sales']  
+                     'After Sales', 'Promo & Itensif']  
 
 
 uploaded_file = st.file_uploader("Unggah file Excel dengan kolom 'Feedback'", type=["xlsx", "xls"])
