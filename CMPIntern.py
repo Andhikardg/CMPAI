@@ -68,59 +68,44 @@ def call_model(provider, prompt, api_key, api_url, model_name):
         }
         response = requests.post(api_url, headers=headers, json=payload)
         return response.json()
-        # return response.json()["choices"][0]["message"]["content"].strip()
-    
     elif provider == "Gemini":
         request_url = f"{api_url}?key={api_key}"
         payload = {
             "contents": [{"parts": [{"text": prompt}]}]
         }
-
-        max_retries = 5  # Jumlah percobaan ulang maksimum
-        initial_retry_delay = 5  # Penundaan awal dalam detik
+        max_retries = 5 
+        initial_retry_delay = 5  
         
         for attempt in range(max_retries):
-            retry_delay = initial_retry_delay * (2 ** attempt) # Exponential backoff
+            retry_delay = initial_retry_delay * (2 ** attempt) 
             
             try:
-                # Tambahkan timeout untuk mencegah permintaan menggantung terlalu lama
                 response = requests.post(request_url, headers=headers, json=payload, timeout=60) 
-
-                # Cek jika status code adalah 429 atau 503, jika ya, coba lagi
                 if response.status_code == 429 or response.status_code == 503:
                     print(f"Server mengembalikan HTTP {response.status_code}. Mencoba ulang dalam {retry_delay} detik... (Percobaan {attempt + 1}/{max_retries})")
                     time.sleep(retry_delay)
-                    continue # Lanjutkan ke iterasi berikutnya dalam loop (mencoba ulang)
-                
-                # Jika status code bukan 429 atau 503, keluar dari loop retry dan proses respons
+                    continue
                 break 
 
             except requests.exceptions.Timeout:
                 print(f"Permintaan timeout setelah {60} detik. Mencoba ulang dalam {retry_delay} detik... (Percobaan {attempt + 1}/{max_retries})")
                 time.sleep(retry_delay)
-                continue # Lanjutkan ke iterasi berikutnya dalam loop
-
+                continue 
             except requests.exceptions.ConnectionError as e:
                 print(f"Error koneksi: {e}. Mencoba ulang dalam {retry_delay} detik... (Percobaan {attempt + 1}/{max_retries})")
                 time.sleep(retry_delay)
-                continue # Lanjutkan ke iterasi berikutnya dalam loop
-
+                continue
             except requests.exceptions.RequestException as e:
-                # Tangani error request lain yang tidak terkait koneksi/timeout/429/503
                 print(f"Terjadi error tak terduga saat mengirim permintaan: {e}")
                 return f"Error: Terjadi error saat mengirim permintaan: {e}"
         else:
-            # Artinya, semua percobaan ulang gagal karena 429 atau 503 atau timeout/koneksi
             print(f"Gagal terhubung ke Gemini API setelah {max_retries} percobaan karena masalah server (429/503/timeout/koneksi).")
             return "Error: Layanan Gemini tidak tersedia atau kuota habis setelah beberapa percobaan."
-        
-        # Penanganan error HTTP selain 200 (yang tidak ditangani oleh retry loop)
+
         if response.status_code != 200:
             print(f"Error HTTP: Gagal terhubung ke Gemini API. Status code: {response.status_code}")
             print("Teks Respon (non-JSON mungkin):", response.text)
             return f"Error: Gagal terhubung ke Gemini API (HTTP {response.status_code}). Detail: {response.text[:100]}..."
-
-        # Penanganan error JSONDecodeError
         try:
             response_data = response.json()
         except requests.exceptions.JSONDecodeError:
@@ -129,8 +114,6 @@ def call_model(provider, prompt, api_key, api_url, model_name):
             return f"Error: Respon tidak valid. Mungkin ada intervensi jaringan atau URL salah. Respon mentah: {response.text[:100]}..." 
         
         print("Full Gemini API Response:", response_data)
-
-        # Penanganan 'candidates' atau 'promptFeedback'
         if "candidates" in response_data and response_data["candidates"]:
             if "content" in response_data["candidates"][0] and "parts" in response_data["candidates"][0]["content"]:
                 if response_data["candidates"][0]["content"]["parts"]: 
@@ -172,8 +155,6 @@ def call_model(provider, prompt, api_key, api_url, model_name):
 
     else:
         raise ValueError("Provider tidak dikenali.")
-
-#Main program
 if uploaded_file and api_key and api_url and model_name:
     df = pd.read_excel(uploaded_file)
 
@@ -209,7 +190,7 @@ Topic: <ONLY one topic from the list {predefined_topics}>
 Now classify the following customer feedback:
 
 "{feedback}"
-""
+"""
             try:
                 result = call_model(provider, prompt, api_key, api_url, model_name)
                 st.write(result)
