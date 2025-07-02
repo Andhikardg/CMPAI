@@ -192,15 +192,24 @@ if uploaded_file and api_key and api_url and model_name:
                 continue
 
             prompt = f"""
-As a data scientist specializing in digital customer feedback topic classification, your task is to objectively analyze the customer feedback and select the most relevant topic from the following list: {predefined_topics}. 
+You are an experienced data scientist and expert in natural language processing, specializing in topic classification for digital customer feedback. Your role is to assign a specific topic to a given piece of customer feedback based on a well-defined list of predefined topics and their descriptions.
 
-Before selecting a topic, make sure to first understand the definitions of each topic provided here: {category_descriptions}.
+Your output must be precise, objective, and strictly limited to the information provided in the feedback text — **no assumptions should be made beyond what is explicitly stated**.
 
-Focus solely on the content of the feedback, and choose **only one topic** from {predefined_topics}, without making any assumptions beyond the available information.
+Instructions:
+1. Carefully read and understand the full list of topics: {predefined_topics}.
+2. Then, refer to the accompanying topic definitions: {category_descriptions}. These definitions explain the scope, nuance, and examples of what each topic includes or excludes.
+3. Read the feedback provided, and analyze it **only based on its content** — do not infer customer intent or context unless it is explicitly described in the text.
+4. Select the **single most appropriate topic** that best captures the main subject or issue expressed in the feedback.
+5. Ensure that your topic selection aligns with the exact definitions provided. When in doubt, always choose the most specific matching topic based solely on textual evidence.
 
-Feedback: "{feedback}"
-"""
+Output format:
+Topic: <ONLY one topic from the list {predefined_topics}>
 
+Now classify the following customer feedback:
+
+"{feedback}"
+""
             try:
                 result = call_model(provider, prompt, api_key, api_url, model_name)
                 st.write(result)
